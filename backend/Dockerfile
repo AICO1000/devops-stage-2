@@ -19,9 +19,6 @@ RUN ~/.local/bin/poetry install
 # Copy the rest of the application files
 COPY . .
 
-# Run prestart script
-RUN ~/.local/bin/poetry run bash ./prestart.sh
-
 # Expose port 8000
 EXPOSE 8000
 
