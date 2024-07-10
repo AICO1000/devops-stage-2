@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y curl bash
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
+# Add Poetry to PATH
+ENV PATH="/root/.local/bin:$PATH"
+
 # Set the working directory
 WORKDIR /app
 
