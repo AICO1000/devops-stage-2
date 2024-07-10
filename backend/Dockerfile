@@ -10,6 +10,9 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 # Add Poetry to PATH
 ENV PATH="/root/.local/bin:$PATH"
 
+# Verify Poetry installation
+RUN poetry --version
+
 # Set the working directory
 WORKDIR /app
 
@@ -17,7 +20,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 
 # Install Poetry dependencies
-RUN ~/.local/bin/poetry install
+RUN poetry install
 
 # Copy the rest of the application files
 COPY . .
@@ -26,4 +29,4 @@ COPY . .
 EXPOSE 8000
 
 # Command to run the backend server
-CMD ["~/.local/bin/poetry", "run", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
