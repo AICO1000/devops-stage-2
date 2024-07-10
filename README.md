@@ -18,3 +18,8 @@ To get started with this template, please follow the instructions in the respect
 - [Frontend README](./frontend/README.md)
 - [Backend README](./backend/README.md)
 
+Setting up the virtual environment.
+Dockerizing the application.
+Running the application locally with Docker.
+Deploying to AWS EC2.
+Configuring the domain and HTTPS.
