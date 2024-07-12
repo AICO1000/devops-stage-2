@@ -1,26 +1,21 @@
-# Use an official Python image as the base image
-FROM python:3.12-slim
+FROM python:3.10-slim
 
-# Install curl and bash
-RUN apt-get update && apt-get install -y curl bash
-
-# Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Set the working directory
 WORKDIR /app
 
-# Copy the pyproject.toml and poetry.lock files
-COPY pyproject.toml poetry.lock ./
+# Install Poetry
+RUN pip install poetry
 
-# Install Poetry dependencies
-RUN ~/.local/bin/poetry install
+# Copy pyproject.toml and poetry.lock
+COPY pyproject.toml poetry.lock /app/
 
-# Copy the rest of the application files
-COPY . .
+# Install dependencies
+RUN poetry install --no-root
 
-# Expose port 8000
-EXPOSE 8000
+# Copy the rest of the application
+COPY . /app
 
-# Command to run the backend server
-CMD ["~/.local/bin/poetry", "run", "uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+# Run the prestart script
+RUN chmod +x /app/prestart.sh
+RUN /app/prestart.sh
+
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
